@@ -1,0 +1,73 @@
+PATH
+  remote: .
+  specs:
+    miasma-google (0.1.0)
+      mime-types
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.4.0)
+    bogo (0.2.4)
+      hashie
+      multi_json
+    coderay (1.1.1)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
+    domain_name (0.5.20160310)
+      unf (>= 0.0.5, < 1.0.0)
+    hashdiff (0.3.0)
+    hashie (3.4.3)
+    http (1.0.4)
+      addressable (~> 2.3)
+      http-cookie (~> 1.0)
+      http-form_data (~> 1.0.1)
+      http_parser.rb (~> 0.6.0)
+    http-cookie (1.0.2)
+      domain_name (~> 0.5)
+    http-form_data (1.0.1)
+    http_parser.rb (0.6.0)
+    method_source (0.8.2)
+    miasma (0.3.2)
+      bogo (>= 0.2.2, < 1.0)
+      http (>= 0.8.12, < 1.1)
+      multi_json
+      multi_xml
+      xml-simple
+    mime-types (3.0)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0221)
+    minitest (5.8.4)
+    multi_json (1.11.2)
+    multi_xml (0.5.5)
+    pry (0.10.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    psych (2.0.17)
+    safe_yaml (1.0.4)
+    slop (3.6.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.2)
+    vcr (3.0.1)
+    webmock (1.24.2)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
+    xml-simple (1.1.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  miasma (>= 0.2.12)
+  miasma-google!
+  minitest
+  pry
+  psych (>= 2.0.8)
+  vcr
+  webmock
+
+BUNDLED WITH
+   1.10.5
