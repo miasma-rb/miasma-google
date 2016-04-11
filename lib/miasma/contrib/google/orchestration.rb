@@ -142,27 +142,34 @@ module Miasma
         # @option data [Array<Hash>] :imports
         # @return [Hash]
         def template_data_unformat(data)
-          res = Hash.new.tap do |result|
-            if(data.to_smash.get(:config, :content))
-              result[:config] = {
-                :content => data[:config][:content].to_hash.to_yaml(:header => true)
-              }
+          Hash.new.tap do |result|
+            if(v = data.to_smash.get(:config, :content))
+              result[:config][:content] = yamlize(v)
             end
             if(data[:imports])
               result[:imports] = data[:imports].map do |item|
-                unless(item['content'].is_a?(String))
-                  Smash.new(
-                    :name => item['name'],
-                    :content => item['content'].to_yaml(:header => true)
-                  )
-                else
-                  item
-                end
+                Smash.new(
+                  :name => item['name'],
+                  :content => yamlize(item['content'])
+                )
               end
             end
           end
-          puts "U RES: #{res}"
-          res
+        end
+
+        # Convert value to YAML if not string
+        #
+        # @param value [Object]
+        # @return [String, Object]
+        def yamlize(value)
+          unless(value.is_a?(String))
+            if(value.is_a?(Hash) && value.respond_to?(:to_hash))
+              value = value.to_hash
+            end
+            value.to_yaml(:header => true)
+          else
+            value
+          end
         end
 
         # Unpack received template data for local model instance
