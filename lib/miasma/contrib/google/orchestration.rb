@@ -144,7 +144,9 @@ module Miasma
         def template_data_unformat(data)
           Hash.new.tap do |result|
             if(v = data.to_smash.get(:config, :content))
-              result[:config][:content] = yamlize(v)
+              result[:config] = {
+                :content => yamlize(v)
+              }
             end
             if(data[:imports])
               result[:imports] = data[:imports].map do |item|
