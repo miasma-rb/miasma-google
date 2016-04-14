@@ -265,6 +265,10 @@ module Miasma
             }
           )
           result.fetch(:body, :operations, []).map do |event|
+            status_msg = [
+              event[:statusMessage],
+              *event.fetch(:error, :errors, []).map{|e| e[:message]}
+            ].compact.join(' -- ')
             Stack::Event.new(
               stack,
               :id => event[:id],
@@ -272,8 +276,8 @@ module Miasma
               :resource_name => stack.name,
               :resource_logical_id => stack.name,
               :resource_state => determine_state(event),
-              :resource_status => event[:status],
-              :resource_status_reason => event[:statusMessage],
+              :resource_status => determine_state(event).to_s.split('_').map(&:capitalize).join(' '),
+              :resource_status_reason => "#{event[:status]} - #{event[:progress]}% complete #{status_msg}",
               :time => Time.parse(event.fetch(:startTime, event[:insertTime]))
             ).valid_state
           end
