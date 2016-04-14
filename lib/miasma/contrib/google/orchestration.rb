@@ -62,10 +62,11 @@ module Miasma
           Smash.new(
             :id => info[:id],
             :created => Time.parse(info[:insertTime]),
+            :updated => Time.parse(info.fetch(:operation, :endTime, info[:operation][:startTime])),
             :description => info[:description],
             :name => info[:name],
             :state => determine_state(info.fetch(:operation, {})),
-            :status => info.fetch(:operation, :status, 'Unknown'),
+            :status => determine_state(info.fetch(:operation, {})).to_s.split('_').map(&:capitalize).join(' '),
             :custom => info
           )
         end
@@ -296,7 +297,7 @@ module Miasma
               :updated => resource[:updateTime] ? Time.parse(resource[:updateTime]) : nil,
               :state => :create_complete,
               :status => 'OK',
-              :status_reason => 'Not Implemented',
+              :status_reason => resource.fetch(:warnings, []).map{|w| w[:message]}.join(' ')
             ).valid_state
           end
         end
