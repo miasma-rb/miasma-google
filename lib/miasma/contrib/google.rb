@@ -236,6 +236,18 @@ module Miasma
           end
         end
 
+        # Define when request should be retried
+        #
+        # @param exception [Exception]
+        # @return [TrueClass, FalseClass]
+        def perform_request_retry(exception)
+          if(exception.is_a?(Error::ApiError::RequestError))
+            exception.response.code >= 500
+          else
+            false
+          end
+        end
+
       end
     end
   end
