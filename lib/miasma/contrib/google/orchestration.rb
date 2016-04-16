@@ -1,13 +1,6 @@
 require 'securerandom'
 require 'miasma'
 
-=begin
-
-parameters: templates must always be nested. parameters are defined by schema. they are
-then passed via properties of nested template resource. leave it to the application to
-properly reformat things
-
-=end
 module Miasma
   module Models
     class Orchestration
