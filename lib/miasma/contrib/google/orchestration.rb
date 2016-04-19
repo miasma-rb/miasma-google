@@ -218,16 +218,31 @@ module Miasma
         # @param stack [Stack]
         # @return [TrueClass, FalseClass]
         def set_outputs_if_available(stack)
-          if(stack.custom.get(:layout, :outputs))
-            outputs = stack.custom.get(:layout, :outputs).map do |output|
-              Smash.new(:key => output[:name], :value => output[:finalValue])
-            end
+          outputs = extract_outputs(stack.custom[:layout])
+          unless(outputs.empty?)
             stack.outputs = outputs
             stack.valid_state
             true
           else
             false
           end
+        end
+
+        # Extract outputs from stack hash
+        #
+        # @param stack_hash [Hash]
+        # @return [Array<Hash>]
+        def extract_outputs(stack_hash)
+          outputs = []
+          if(stack_hash[:outputs])
+            outputs += stack_hash[:outputs].map do |output|
+              Smash.new(:key => output[:name], :value => output[:finalValue])
+            end
+          end
+          stack_hash.fetch(:resources, []).each do |resource|
+            outputs += extract_outputs(resource)
+          end
+          outputs
         end
 
         # Delete stack
