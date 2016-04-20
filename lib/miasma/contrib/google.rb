@@ -133,7 +133,7 @@ module Miasma
           klass.class_eval do
             attribute :google_service_account_email, String, :required => true
             attribute :google_service_account_private_key, String, :required => true
-            attribute :google_auth_scope, String, :required => true, :multiple => true
+            attribute :google_auth_scope, String, :required => true, :multiple => true, :default => 'cloud-platform'
             attribute :google_auth_base, String, :default => 'https://www.googleapis.com/auth'
             attribute :google_assertion_target, String, :required => true, :default => 'https://www.googleapis.com/oauth2/v4/token'
             attribute :google_assertion_expiry, Integer, :required => true, :default => 120
