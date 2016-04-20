@@ -55,7 +55,7 @@ module Miasma
           Smash.new(
             :id => info[:id],
             :created => Time.parse(info[:insertTime]),
-            :updated => Time.parse(info.fetch(:operation, :endTime, info[:operation][:startTime])),
+            :updated => Time.parse(info.fetch(:operation, :endTime, info.fetch(:operation, :startTime, info[:insertTime]))),
             :description => info[:description],
             :name => info[:name],
             :state => determine_state(info.fetch(:operation, {})),
@@ -218,7 +218,7 @@ module Miasma
         # @param stack [Stack]
         # @return [TrueClass, FalseClass]
         def set_outputs_if_available(stack)
-          outputs = extract_outputs(stack.custom[:layout])
+          outputs = extract_outputs(stack.custom.fetch(:layout, {}))
           unless(outputs.empty?)
             stack.outputs = outputs
             stack.valid_state
